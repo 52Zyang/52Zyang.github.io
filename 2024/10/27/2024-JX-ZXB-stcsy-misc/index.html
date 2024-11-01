@@ -1,0 +1,699 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Ch1p3">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Misc0x01 haveflag2 发现http流量中有压缩包，导出http  分析压缩包，无密码解压得到一张图片和一个word文档 先对文档分析，空白的，全选设置字体为红色得到一串字符  1FGsdtu89$  word文档分析没有其他东西再转向图片文件分析 分析到图片尾部发现图片中还有个压缩包，而压缩包的内容为另一张png图片  将内容复制出来，或者使用工具对其进行分离  搜索png图片的文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024年江西省“振兴杯”职业技能大赛信息安全测试员(渗透测试员)赛项 Misc-wp">
+<meta property="og:url" content="http://52yang.top/2024/10/27/2024-JX-ZXB-stcsy-misc/index.html">
+<meta property="og:site_name" content="C_h1p3">
+<meta property="og:description" content="Misc0x01 haveflag2 发现http流量中有压缩包，导出http  分析压缩包，无密码解压得到一张图片和一个word文档 先对文档分析，空白的，全选设置字体为红色得到一串字符  1FGsdtu89$  word文档分析没有其他东西再转向图片文件分析 分析到图片尾部发现图片中还有个压缩包，而压缩包的内容为另一张png图片  将内容复制出来，或者使用工具对其进行分离  搜索png图片的文">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273010490-2f72ad3b-0c29-4f8e-a4ad-8cf79459fc09.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273043357-b3a4f931-580f-4f01-b068-a1261df9e5c4.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273171015-8eb1ee23-92f4-4f73-85d0-d22a815954e1.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273395747-e6eb6962-2e3a-48f0-9d3d-4c037cd97199.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273610907-d72d9260-256f-49e0-bc3e-7aacfc7fbfac.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273667319-bdb6c984-85a9-4604-b43b-e4551cf2c498.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273690194-e66266e4-1b73-4b7f-9bae-7174183e33e0.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273721380-2a77a8d5-d141-40c4-af2a-62ddae09b343.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273778673-2a6d114e-374c-49d6-bf3d-d232ac08fbd2.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273837363-d767ddf4-8dd3-4f0a-94af-1bf7b2c761f6.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273958007-abf87d28-050a-42eb-b828-d56322f4fefa.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273981422-6683b019-4c5d-4444-826a-64fde6faa1ac.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274059897-1ea49928-1c1b-4ea2-a708-6e37ae6f359b.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274148225-f9cc7c1c-968b-4a71-ba66-88e6bf2cf041.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274253617-937bc8bf-e5c1-4992-97e3-af0831db3d89.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274333070-1c37b241-0158-4f7f-8e0a-05b701e449f7.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274617065-f5352d22-2c7e-4e27-9705-ec6340141d4a.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274636821-0629da19-7d8f-4df5-9a5a-e691ecbcd61b.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274666239-f78ffc3d-8552-4a0d-874c-65cf4bf81a3d.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730275201623-c96e2a1c-d0ed-4368-9d47-b07c1c911b68.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730275716788-b79be48e-5847-4a33-878d-e4a4c422f4fe.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730276224166-a1796fc1-47fd-4472-ac95-49a4a8388f3e.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730276479755-bfbda576-f1ad-4f8f-8d16-68422e4f39c5.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730276885265-3b5084fa-6e1a-4ae2-9462-53d80987cdc0.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730277057875-af63f92b-4409-4d33-804e-56baf6aac77f.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730277075326-bbf5ee16-57b5-4ce9-a29f-d0bdf889381c.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730278173632-519c6f09-effe-4cc0-97d5-5de5b91a5c47.png">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730278249022-166a2bd2-6c5f-48ed-8189-c5230c578a3b.png">
+<meta property="article:published_time" content="2024-10-27T01:26:24.683Z">
+<meta property="article:modified_time" content="2024-11-01T14:40:42.436Z">
+<meta property="article:author" content="Ch1p3">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273010490-2f72ad3b-0c29-4f8e-a4ad-8cf79459fc09.png">
+  
+  
+  
+  <title>2024年江西省“振兴杯”职业技能大赛信息安全测试员(渗透测试员)赛项 Misc-wp - C_h1p3</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"52yang.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chip3&#39;blogs</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2024年江西省“振兴杯”职业技能大赛信息安全测试员(渗透测试员)赛项 Misc-wp"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-27 09:26" pubdate>
+          2024年10月27日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          650 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          6 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2024年江西省“振兴杯”职业技能大赛信息安全测试员(渗透测试员)赛项 Misc-wp</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h4 id="0x01-haveflag2"><a href="#0x01-haveflag2" class="headerlink" title="0x01 haveflag2"></a>0x01 haveflag2</h4><p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273010490-2f72ad3b-0c29-4f8e-a4ad-8cf79459fc09.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>发现http流量中有压缩包，导出http</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273043357-b3a4f931-580f-4f01-b068-a1261df9e5c4.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>分析压缩包，无密码解压得到一张图片和一个word文档</p>
+<p>先对文档分析，空白的，全选设置字体为红色得到一串字符</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273171015-8eb1ee23-92f4-4f73-85d0-d22a815954e1.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">FGsdtu89$<br></code></pre></td></tr></table></figure>
+
+<p>word文档分析没有其他东西再转向图片文件分析</p>
+<p>分析到图片尾部发现图片中还有个压缩包，而压缩包的内容为另一张png图片</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273395747-e6eb6962-2e3a-48f0-9d3d-4c037cd97199.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>将内容复制出来，或者使用工具对其进行分离</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273610907-d72d9260-256f-49e0-bc3e-7aacfc7fbfac.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>搜索png图片的文件尾部</p>
+<p>从PK压缩包头部50 4B开始复制另存为一个新文件</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273667319-bdb6c984-85a9-4604-b43b-e4551cf2c498.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273690194-e66266e4-1b73-4b7f-9bae-7174183e33e0.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>可以看到压缩包有加密</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273721380-2a77a8d5-d141-40c4-af2a-62ddae09b343.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>这时候可以用到word文档中的那串字符尝试进行解密</p>
+<p>尝试解密发现就是压缩包的密码</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273778673-2a6d114e-374c-49d6-bf3d-d232ac08fbd2.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>得到一张二维码，使用CQR二维码解码工具进行扫描</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273837363-d767ddf4-8dd3-4f0a-94af-1bf7b2c761f6.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>得到flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">flag&#123;fjgnc59TJoomcewmzrr0vnsmi&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="0x02-文字文稿1"><a href="#0x02-文字文稿1" class="headerlink" title="0x02 文字文稿1"></a>0x02 文字文稿1</h4><p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273958007-abf87d28-050a-42eb-b828-d56322f4fefa.png" srcset="/img/loading.gif" lazyload alt="img">拿到题目附件</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730273981422-6683b019-4c5d-4444-826a-64fde6faa1ac.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>发现有一句诗，全选一下设置字体为红色</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274059897-1ea49928-1c1b-4ea2-a708-6e37ae6f359b.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>可以发现word文档底部还有一串摩斯电码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">..--- -.-. ....- ----- ....<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274148225-f9cc7c1c-968b-4a71-ba66-88e6bf2cf041.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>使用工具解码后得到一串字符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">2C40H<br></code></pre></td></tr></table></figure>
+
+<p>这时候想到去分析文件的数据</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274253617-937bc8bf-e5c1-4992-97e3-af0831db3d89.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>可以看到文件中有txt文本，还有一串base编码</p>
+<p>，我们先对base编码进行解码操作，base64解码</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274333070-1c37b241-0158-4f7f-8e0a-05b701e449f7.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>得到flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">flag&#123;rlnujmbsf4d19ytoexi0wpgq7czh82v3&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这时候想继续去分析一下txt文件，使用工具对word文档进行分离</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274617065-f5352d22-2c7e-4e27-9705-ec6340141d4a.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274636821-0629da19-7d8f-4df5-9a5a-e691ecbcd61b.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>解压查看txt文件内容</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730274666239-f78ffc3d-8552-4a0d-874c-65cf4bf81a3d.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>文件大小为0</p>
+<p>可能正是和文本文件的名字一样，用来误导ctfer的，所以说做题的时候还是需要仔细分析，如果真到山穷水尽的时候不妨回头看看</p>
+<h4 id="0x03-aaa"><a href="#0x03-aaa" class="headerlink" title="0x03 aaa"></a>0x03 aaa</h4><p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730275201623-c96e2a1c-d0ed-4368-9d47-b07c1c911b68.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>拿到内存镜像，使用vol分析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">./volatility_2.6 -f aaa.raw imageinfo<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730275716788-b79be48e-5847-4a33-878d-e4a4c422f4fe.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>使用filescan插件进行筛选</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">./volatility_2.6 -f aaa.raw --profile=Win7SP1x64 filescan | grep -E &quot;txt|zip|flag&quot;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730276224166-a1796fc1-47fd-4472-ac95-49a4a8388f3e.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>搭配grep筛选包含关键字的内容</p>
+<p>可以看到得到一个名为fll4g的zip压缩包</p>
+<p>我们导出一下压缩包文件进行分析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">./volatility_2.6 -f aaa.raw --profile=Win7SP1x64 dumpfiles -Q 0x00000000144b5590 -D ./<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730276479755-bfbda576-f1ad-4f8f-8d16-68422e4f39c5.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730276885265-3b5084fa-6e1a-4ae2-9462-53d80987cdc0.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>文件加密，经过一番查找并未得到有关密码的内容，</p>
+<p>现在只剩下俩个办法，对压缩包进行暴力破解   （X）</p>
+<p>对内存镜像的用户密码进行破解</p>
+<p><code>Passware Kit Forensic</code></p>
+<p>使用到这个工具</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730277057875-af63f92b-4409-4d33-804e-56baf6aac77f.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>在主页选择内存分析</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730277075326-bbf5ee16-57b5-4ce9-a29f-d0bdf889381c.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>选择好镜像后直接下一步，剩下的就是耐心等待</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730278173632-519c6f09-effe-4cc0-97d5-5de5b91a5c47.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>得到admin用户的密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">P@55w0rd!<br></code></pre></td></tr></table></figure>
+
+<p>尝试使用这个密码对压缩包进行解压，发现是正确的密码</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22284972/1730278249022-166a2bd2-6c5f-48ed-8189-c5230c578a3b.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>得到flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">flag&#123;64cf9601989168f7ced3aeea9064c411&#125;<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2024年江西省“振兴杯”职业技能大赛信息安全测试员(渗透测试员)赛项 Misc-wp</div>
+      <div>http://52yang.top/2024/10/27/2024-JX-ZXB-stcsy-misc/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Ch1p3</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>52ZY</span> #<i class="iconfont icon-love"></i> #<a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
