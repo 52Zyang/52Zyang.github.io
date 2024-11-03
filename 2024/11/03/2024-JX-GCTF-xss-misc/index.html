@@ -1,0 +1,862 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Ch1p3">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="misc0x01-checkin 对图片进行分析，使用hex 可以看到图片的末尾有一段十六进制显示是有区别的，这里可以考虑一下是编码不同的原因 1https:&#x2F;&#x2F;lzltool.cn&#x2F;Tools&#x2F;HexToUtf8     这里根据jpg的文件 FF D9 识别，在复制后面的数据进行16进制转UTF-8 1自由法治自由和谐平等自由自由公正法治友善平等法治法治法治平等平等友善敬业法治法治公正平等公正">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024-GCTF(赣CTF)第二届江西省高校联合新生赛 Misc-wp">
+<meta property="og:url" content="http://52yang.top/2024/11/03/2024-JX-GCTF-xss-misc/index.html">
+<meta property="og:site_name" content="C_h1p3">
+<meta property="og:description" content="misc0x01-checkin 对图片进行分析，使用hex 可以看到图片的末尾有一段十六进制显示是有区别的，这里可以考虑一下是编码不同的原因 1https:&#x2F;&#x2F;lzltool.cn&#x2F;Tools&#x2F;HexToUtf8     这里根据jpg的文件 FF D9 识别，在复制后面的数据进行16进制转UTF-8 1自由法治自由和谐平等自由自由公正法治友善平等法治法治法治平等平等友善敬业法治法治公正平等公正">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://52yang.top/2024-JX-GCTF-xss-misc/capooo.gif">
+<meta property="article:published_time" content="2024-11-03T03:45:58.966Z">
+<meta property="article:modified_time" content="2024-11-03T04:33:10.547Z">
+<meta property="article:author" content="Ch1p3">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://52yang.top/2024-JX-GCTF-xss-misc/capooo.gif">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>2024-GCTF(赣CTF)第二届江西省高校联合新生赛 Misc-wp - C_h1p3</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"52yang.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Ch1p3&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2024-GCTF(赣CTF)第二届江西省高校联合新生赛 Misc-wp"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-11-03 11:45" pubdate>
+          2024年11月3日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2024-GCTF(赣CTF)第二届江西省高校联合新生赛 Misc-wp</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h2><h4 id="0x01-checkin"><a href="#0x01-checkin" class="headerlink" title="0x01-checkin"></a>0x01-checkin</h4><p><img src="/../2024-JX-GCTF-xss-misc/image001.png" srcset="/img/loading.gif" lazyload></p>
+<p>对图片进行分析，使用hex</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image003.png" srcset="/img/loading.gif" lazyload><br>可以看到图片的末尾有一段十六进制显示是有区别的，这里可以考虑一下是编码不同的原因</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>lzltool.cn<span class="hljs-regexp">/Tools/</span>HexToUtf8<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image005.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里根据jpg的文件 FF D9 识别，在复制后面的数据进行16进制转UTF-8</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">自由法治自由和谐平等自由自由公正法治友善平等法治法治法治平等平等友善敬业法治法治公正平等公正敬业平等友善敬业法治民主公正敬业平等友善敬业法治敬业法治平等公正平等平等友善敬业公正爱国公正民主公正友善敬业法治法治公正民主公正诚信自由文明民主文明民主文明民主法治友善法治<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">核心价值观编码  https:<span class="hljs-regexp">//</span>sym233.github.io<span class="hljs-regexp">/core-values-encoder/</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image007.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">GCTF&#123;wu_wei_qi_yue_haowan!!!&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="0x02-送分的Forensics-1"><a href="#0x02-送分的Forensics-1" class="headerlink" title="0x02-送分的Forensics 1"></a>0x02-送分的Forensics 1</h4><p><img src="/../2024-JX-GCTF-xss-misc/image009.png" srcset="/img/loading.gif" lazyload></p>
+<p>社工题，这类题目主要考察信息收集能力，对图片类型可以使用网上的一些识图工具</p>
+<p>例如百度识图或者google</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image011.png" srcset="/img/loading.gif" lazyload></p>
+<p>百度识图推测的地址为江心屿，但实际是个错误的地方，分析一下识别出来的内容</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image013.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image015.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image017.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image019.png" srcset="/img/loading.gif" lazyload></p>
+<p>根据这篇文章的内容可以知道图片的地点为湘江，详细地点为纪念杜甫的遗迹，搜索一下</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image021.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到地点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">GCTF&#123;湖南省长沙市杜甫江阁&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="0x03-送分的Forensics-2"><a href="#0x03-送分的Forensics-2" class="headerlink" title="0x03-送分的Forensics 2"></a>0x03-送分的Forensics 2</h4><p><img src="/../2024-JX-GCTF-xss-misc/image023.png" srcset="/img/loading.gif" lazyload></p>
+<p>同样类型的题目，照着同样的操作即可</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image025.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到和题目中的一模一样，</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image027.png" srcset="/img/loading.gif" lazyload></p>
+<p>搜索一下得到地点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">GCTF&#123;江西省新余市仙女湖&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="0x04-嘿嘿，真的是无畏契约呢"><a href="#0x04-嘿嘿，真的是无畏契约呢" class="headerlink" title="0x04-嘿嘿，真的是无畏契约呢"></a>0x04-嘿嘿，真的是无畏契约呢</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHiElEQVR4nO3cwYrcRhRAUSn4/z/ZymKcMGShReoWVdVzDhibgW5p1O1LLR7v/v38vp77vp/ruZ7rvq/ruZ/7uZ77up77/vrZc13Xdd3P15/rea77up/7uq/rua77er7++vP3fT3Xff15yXN9vfz5/vPn61/PdV3XfV9fb/Hf9//39f9cBTjC/TzP6nsAPspfq28A+DSyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitA7NeqC9/3verSkzzP879fO+9pvN/V+3Xn/Uar7uqd72TFaQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiC2bsn23ajrw3apZ2Hfvd7VqYvXdntO9737ad3KE0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENt0yvbdntOuI/b8jUbuatWkrE9wB04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0DsyCnbE41Mjs6b4Nxzjnbea0+cWD2R0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEDNle7yRCd1V0718NqcVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSB25JTtiRtJV82zjjyrVdtqV113xInfyXmcVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2KZTtp+3RXXVTtl51503vzvvuiM+7zs5j9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChBbNmX703Z/njhXeqJVu3v5zmkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYgtm7Id2Qw6bxpy3r7SkXueN4O7arr386aK9/w+r+K0AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLE7lUTfiNzlqteu8qe9zxvInnEqm/Ou1XvvIrTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQW7bLdtV04LzNr/PMm9Ecue68d141C/tu1dM4kdMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChBbNmX7bt6s5IkbSVftOt1zW+0qP22D8ginFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgtumU7buRqcSRach5s5LmaL/bc4fuvOuO2HN+12kFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYgdOWU7Ys+Ns/N83u87ct1VT+PzJqHfOa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALF71bbLVbOD8yZHT9xXuuenMOLztgKv+h86wmkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYgt22W752bQEydlR647Yt688qqNsydO6K76Xr1zWgFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYsumbOdZNd85Ys+dsiMzqfOmqE/cGnviPY9wWgFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYveqKb1Vc6XvTnwaJ97zPKt2yr77vLnhd04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0DsyF2282YW5027rtreuucs7LsTZ1Ln7f0due4qTitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGzTXbarJlbnPY1V05DzJjhPfM6f973ak9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7cpftuz33hp44v7tqw+6em33nPec9t/OOcFoBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWLLdtn+NKsmdOddd9Wk7J47ZfecwF7FaQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiC3bZTtvf+cqI7OS8yZHR955zx2rq3bKrprQPXEG12kFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYgtm7J9t+dk4arJ4D132Y5cd96m2xHzvnUnfoIjnFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNimU7bv9tyxOu+d99z7u+ddvVt1z6u2Ea/itALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxI6csv08J+4rHbHnptt5T/L9nkeexp6cVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmCnbLYzMlf60Cd159twLe+IMrtMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7csp2z8nCd/NmYVdNYa66q1UbZ0eu+3mf/junFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgtumU7Z5bRVfZ82mMzHeueu2IPT+FPSfOnVaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNi955QecC6nFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiP0NIdMzLuV40U8AAAAASUVORK5CYII=<br></code></pre></td></tr></table></figure>
+
+<p>CyberChef</p>
+<p>解码得到图片数据，再转换得到一张二维码</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image029.png" srcset="/img/loading.gif" lazyload></p>
+<p>扫描发现是wuweiqiyue的官网，那就导出这张二维码分析png图片里的数据</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image031.png" srcset="/img/loading.gif" lazyload></p>
+<p>并没有发现内容，这时候思考一下png图片的一些像素隐写，使用<strong>zsteg</strong>工具检测一下png图片中的lsb数据</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image033.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image035.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">GCTF&#123;wa_zh3nd3h@owan&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="0x05-真的是basc64哦"><a href="#0x05-真的是basc64哦" class="headerlink" title="0x05-真的是basc64哦"></a>0x05-真的是basc64哦</h4><p><img src="/../2024-JX-GCTF-xss-misc/image037.png" srcset="/img/loading.gif" lazyload></p>
+<p>看文件的内容，很明显的base64隐写</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image039.png" srcset="/img/loading.gif" lazyload></p>
+<p>网上脚本也很多</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs plain">import base64 <br>path = &#x27;4nums.txt&#x27;  #将需要解密的内容填入文本文件<br>file = open(path,encoding=&#x27;utf-8&#x27;)<br>a = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&quot;<br>aaa = &#x27;&#x27;<br>while True:<br>    text = file.readline()  # 只读取一行内容<br>    # 判断是否读取到内容<br>    text = text.replace(&quot;\n&quot;, &quot;&quot;)<br>    if not text:<br>        break<br>    if text.count(&#x27;=&#x27;) == 1:<br>        aaa = aaa + \<br>            str(&#x27;&#123;:02b&#125;&#x27;.format((a.find(text[len(text)-2])) % 4))<br>    if text.count(&#x27;=&#x27;) == 2:<br>        aaa = aaa + \<br>            str(&#x27;&#123;:04b&#125;&#x27;.format((a.find(text[len(text)-3])) % 16))<br>file.close()<br>t = &quot;&quot;<br>ttt = len(aaa)<br>ttt = ttt//8*8<br>for i in range(0,ttt,8):<br>    t = t + chr(int( aaa[i:i+8],2))<br>print(t)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image041.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">GCTF&#123;you_kn0w_base_sixsix_four&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="0x06-ez-流量"><a href="#0x06-ez-流量" class="headerlink" title="0x06-ez_流量"></a>0x06-ez_流量</h4><p><img src="/../2024-JX-GCTF-xss-misc/image043.png" srcset="/img/loading.gif" lazyload></p>
+<p>观察流量包特征，发现又sql注入的痕迹</p>
+<p>过滤http流量，只筛选GET包</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">http contains <span class="hljs-string">&quot;<span class="hljs-keyword">GET</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image045.png" srcset="/img/loading.gif" lazyload></p>
+<p>导出分组解析结果为CSV</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image047.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image049.png" srcset="/img/loading.gif" lazyload></p>
+<p>去掉其他数据，对注入数据进行分析得出结论，注入方式为布尔盲注，何为布尔盲注</p>
+<p>substr函数原理</p>
+<p>在构造SQL语句之时，and后面如果跟着一个大于0的数，那么SQL语句正确执行，所以利用此特性，使用substr截取字符，当截取的字符不存在，再通过asci函数处理之后将会变成false，页面将回显错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plain">SELECT*from users WHERE id = l and ascii(substr(database(),8,1))<br><br>substr 返回子字符串<br>8是当前数据库&#x27;security&#x27;的长度 ，从第8个开始，取1位，则是&#x27;r&#x27;<br>如果pos为9 那么开始位置大于字符串长度，ascii函数处理后将变成false<br>and 后只要不为 0，页面都会返回正常<br></code></pre></td></tr></table></figure>
+
+<p>此处为求数据库的名，根据这个原理分析一下过滤出来的注入数据信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plain">GET /ctf/Less-5/?id=1%20and%20ascii(substr((select%20flag%20from%20t),1,1))=33--+ HTTP/1.1<br>#取出关键注入数据<br><br>?id=1%20and%20ascii(substr((select%20flag%20from%20t),1,1))=33<br><br>判断注入<br><br>ascii()函数用于获取一个字符的 ASCII 码值。整个这部分的意思是，获取 flag 字符串的第一个字符的 ASCII 码值，并与 33 进行比较。攻击者通过不断修改这个比较的值（例如从 33 开始逐步尝试不同的 ASCII 码值），根据数据库返回的结果（如果条件满足返回相应数据行，不满足则可能返回空结果或错误提示等不同情况，取决于具体数据库和应用程序设置）来判断猜测的字符是否正确。如果数据库执行这个注入语句后返回了预期的结果（比如符合前面正常查询条件 id = 1 且这个字符比较条件也满足的数据行），那么就说明猜测的这个字符的 ASCII 码值是正确的，进而可以继续猜测下一个字符，通过不断重复这个过程，理论上就可以逐步还原出整个 flag 字符串。<br><br>使用substr返回在名为t表的flag值,这里的1,1则是查询得到的 flag 字符串结果中，截取从第 1 个字符开始，长度为 1 的子字符串，也就是只获取 flag 字符串的第一个字符。通过这种方式，攻击者可以逐个字符地去猜测 flag 的内容<br></code></pre></td></tr></table></figure>
+
+<p>了解了原理就可以很清楚的明白，每个切片返回的ascii值就是读取到的正确字符</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image051.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里的  1,1 变为  2,1 说明上一个ascii为正确的值，</p>
+<p>以此类推得到全部的ascii值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">102 108 97 103 123 119 49 114 101  115 104 65 82 75 95 101 122 95 49 115 110 116 105 116 125 126 126 126 126<br></code></pre></td></tr></table></figure>
+
+<p>转换一下数据</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>www.lzltool.cn<span class="hljs-regexp">/Tools/</span>AsciiToText<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image053.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">flag&#123;w1reshARK_ez_1sntit&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="0x07-ez-forensics"><a href="#0x07-ez-forensics" class="headerlink" title="0x07-ez_forensics"></a>0x07-ez_forensics</h4><p><img src="/../2024-JX-GCTF-xss-misc/image055.png" srcset="/img/loading.gif" lazyload></p>
+<p>一张图片跟一个加密的文件</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image057.png" srcset="/img/loading.gif" lazyload></p>
+<p>图片为纯白，分析数据并没有内容</p>
+<p>再仔细观察图片可以发现在左上角有一点不同的像素，可以想到像素隐写，使用zsteg工具跑一下</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image059.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以发现无法检测到隐写内容，这时候可以使用 –all  参数对图片文件使用所有的方法进行检测</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image061.png" srcset="/img/loading.gif" lazyload></p>
+<p>成功得到key信息</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">key: y<span class="hljs-number">0</span>u_c<span class="hljs-number">4</span><span class="hljs-symbol">n_n3</span>v<span class="hljs-number">3</span>r_k<span class="hljs-symbol">n0</span>w_<span class="hljs-number">7</span>h<span class="hljs-number">3</span>_k<span class="hljs-number">3</span>y<br></code></pre></td></tr></table></figure>
+
+<p>得到key后，再看到另一个加密文件，结合题目名可以想到内存取证需要使用到key的软件</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">VeraCrypt</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image063.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image065.png" srcset="/img/loading.gif" lazyload></p>
+<p>输入从图片中得到的key</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image067.png" srcset="/img/loading.gif" lazyload></p>
+<p>加载完成后再资源管理器中找到我们挂载的盘符，得到flag</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image069.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">GCTF&#123;f0r3n51c5_4nd_158_15_34zy&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="0x09-ez-word"><a href="#0x09-ez-word" class="headerlink" title="0x09-ez_word"></a>0x09-ez_word</h4><p><img src="/../2024-JX-GCTF-xss-misc/image073.png" srcset="/img/loading.gif" lazyload></p>
+<p>word文件，拿到文件的时候可以想想这种类型的文件有什么隐写方式，</p>
+<p>一些看不见的字符我们可以直接全选文档然后将字体颜色设置为红色</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image075.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image077.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">Flag1=GCTF&#123;welc33me_<br></code></pre></td></tr></table></figure>
+
+<p>复制不出来直接右键搜索即可</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image079.png" srcset="/img/loading.gif" lazyload></p>
+<p>点开文件对隐藏图片显示进行设置，找到账户下的选项</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image081.png" srcset="/img/loading.gif" lazyload></p>
+<p>打开显示隐藏文字，得到图片</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image083.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">Flag2=w0rd@_<br></code></pre></td></tr></table></figure>
+
+<p>接着去分析word文件的数据</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image085.png" srcset="/img/loading.gif" lazyload></p>
+<p>word文件的底部发现有个压缩包，另存一下压缩包文件</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image087.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image089.png" srcset="/img/loading.gif" lazyload></p>
+<p>base100加密</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">🐝🐚🐮🐯🐲🐝🐚🐨🐩🐩🐲🐝🐚🐨🐧🐫🐲🐝🐚🐨🐨🐰🐲🐝🐚🐮🐮🐲🐝🐚🐨🐨🐧🐲🐝🐚🐭🐭🐲🐝🐚🐰🐧🐲🐝🐚🐰🐮🐲🐝🐚🐭🐰🐲🐝🐚🐨🐩🐧🐲🐝🐚🐬🐩🐲🐝🐚🐯🐨🐲🐝🐚🐨🐩🐩🐲🐝🐚🐯🐩🐲🐝🐚🐮🐧🐲🐝🐚🐰🐯🐲🐝🐚🐨🐨🐧🐲🐝🐚🐭🐬🐲🐝🐚🐭🐨🐲<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image091.png" srcset="/img/loading.gif" lazyload></p>
+<p>解码得到unicode</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">&amp;#78;&amp;#122;&amp;#104;&amp;#119;&amp;#77;&amp;#110;&amp;#66;&amp;#90;&amp;#97;&amp;#69;&amp;#120;&amp;#52;&amp;#81;&amp;#122;&amp;#82;&amp;#70;&amp;#98;&amp;#110;&amp;#65;&amp;#61;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image093.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">NzhwMnBZaEx4QzRFbnA=<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image095.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">78p2pYhLxC4Enp<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image097.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里推荐一个解码工具</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">ToolsFx</span><br><span class="hljs-selector-attr">[GitHub - Leon406/ToolsFx: 基于kotlin+tornadoFx的跨平台密码学工具箱.包含编解码,编码转换,加解密, 哈希,MAC,签名,大数运算,压缩,二维码功能,ctf等实用功能,支持插件]</span>(<span class="hljs-attribute">https</span>:<span class="hljs-comment">//github.com/Leon406/ToolsFx)</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image099.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>可以直接梭哈出结果，但是不得不提一嘴，工具是为了更便捷的做题目，新手ctfer还是要去了解一下各种编码的原理，只有懂了原理才能成为真正的ctfer糕手。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">Flag3=m1ssccc$$&#125;<br>GCTF&#123;welc33me_w0rd@_m1ssccc$$&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="0x10-爱玩原神？"><a href="#0x10-爱玩原神？" class="headerlink" title="0x10-爱玩原神？"></a>0x10-爱玩原神？</h4><p><img src="/../2024-JX-GCTF-xss-misc/image101.png" srcset="/img/loading.gif" lazyload></p>
+<p>题目只有一张图片，这时候可以分析一下文件数据</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image103.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到jpg图片的尾部还有一个压缩包，搜索jpg的文件尾将PK（504B）开头的内容另存为一个新文件，</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image105.png" srcset="/img/loading.gif" lazyload></p>
+<p>拿到隐藏的压缩包，压缩包中有个文本文件但是压缩包是加密的，这时候需要再jpg图片中继续寻找压缩包的密码</p>
+<p>jpg的隐写，试过其他的之后，尝试到隐形水印的时候有了结果</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image107.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image109.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">zhendemisiwole!!!!#!<br></code></pre></td></tr></table></figure>
+
+<p>盲水印的原理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">盲水印是一种肉眼不可见的水印方式，对图片资源使用图片盲水印或者文字水印，借此避免数字媒体未经授权的复制和拷贝，可通过对原图进行解码操作，得到水印图来证明版权归属。<br>这类盲水印是怎样实现的呢？原理并不复杂，通常是将图片进行离散余弦、小波或者傅里叶变换，得到图片的频谱信息，再将水印的编码信息叠加到图片的频谱上，然后再进行一次逆变换，生成的图片就带有几乎无法检测、但又可以确切还原出来的盲水印了。<br></code></pre></td></tr></table></figure>
+
+<p>题目的盲水印无需原图即可还原也可以称为单图盲水印</p>
+<p>使用得到的密码解压压缩包得到文本文件的内容</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image111.png" srcset="/img/loading.gif" lazyload></p>
+<p>很明显的逆序，这里的文本文件里的内容已经显示出来了将编码逆序即可</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image113.png" srcset="/img/loading.gif" lazyload></p>
+<p>附上一个逆序的脚本，恢复压缩包还是无法解压的，因为数据内容只是像压缩包其实并不是压缩包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">a = open(&#x27;ys.zip&#x27;,&#x27;rb&#x27;)<br>b = open(&#x27;ysqd.zip&#x27;,&#x27;wb&#x27;)<br>b = b.write(a.read()[::-1])  #把读取到的数据：：-1即可<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image115.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">GCTF&#123;yu@nsh3n_qid0ng_qidong!!!&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="0x11-坚持不懈的压缩"><a href="#0x11-坚持不懈的压缩" class="headerlink" title="0x11-坚持不懈的压缩"></a>0x11-坚持不懈的压缩</h4><p><img src="/../2024-JX-GCTF-xss-misc/image117.png" srcset="/img/loading.gif" lazyload></p>
+<p>解压压缩包得到password文本文件和一个加密的压缩包</p>
+<p>先看到passwd文件里的内容</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image119.png" srcset="/img/loading.gif" lazyload></p>
+<p>俩个等号，这时候就已经想到base64编码了，应该是换码表了，所以看起来和正常的base64有些不一样</p>
+<p>使用<strong>CyberChef</strong>进行解码的操作</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image121.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到密码，再用密码去解压加密的压缩包，发现可以成功解压</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image123.png" srcset="/img/loading.gif" lazyload></p>
+<p>下一层同理，也能使用密码进行解压</p>
+<p>典型的压缩包套娃，解压一千次就能得到flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs plain">import os<br>import zipfile<br><br><br>def recursive_unzip(zip_file_path, password):<br>    with zipfile.ZipFile(zip_file_path, &#x27;r&#x27;) as zip_ref:<br>        try:<br>            zip_ref.extractall(pwd=password.encode(&#x27;utf-8&#x27;))<br>        except RuntimeError as e:<br>            print(f&quot;解压 &#123;zip_file_path&#125; 时出错: &#123;e&#125;&quot;)<br>            return<br><br>    base_folder = os.path.splitext(zip_file_path)[0]<br><br>    for root, dirs, files in os.walk(base_folder):<br>        for file in files:<br>            file_path = os.path.join(root, file)<br>            if file_path.endswith(&#x27;.zip&#x27;):<br>                recursive_unzip(file_path, password)<br><br><br>if __name__ == &quot;__main__&quot;:<br>    password = &quot;GCTF_yeyeyeye&quot;<br>    zip_file_names = []<br>    for i in range(998, 0, -1):   #此处998需要修改为同目录下压缩包的名字，比如我是997就需要改为997<br>        zip_file_names.append(f&quot;temp_&#123;i&#125;.zip&quot;)<br><br>    for zip_file_name in zip_file_names:<br>        recursive_unzip(zip_file_name, password)<br></code></pre></td></tr></table></figure>
+
+<p>比较懒，就优化一下，能用就行，</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image125.png" srcset="/img/loading.gif" lazyload></p>
+<p>找到temp_0</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image127.png" srcset="/img/loading.gif" lazyload></p>
+<p>输入密码得到flag文件</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image129.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">GCTF&#123;the_final_is_me_hahaha!!!&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="0x12-可惜雪飘进了双眼"><a href="#0x12-可惜雪飘进了双眼" class="headerlink" title="0x12-可惜雪飘进了双眼"></a>0x12-可惜雪飘进了双眼</h4><p><img src="/../2024-JX-GCTF-xss-misc/image131.png" srcset="/img/loading.gif" lazyload></p>
+<p>打开文本文件可以，发现里面有字符但是看不见，可以想到应该是whitespace</p>
+<p>white_space是一种编程语言<br>由”空格”，”回车”，”tab”组成</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-attr">[Whitelips the Esoteric Language IDE]</span>(<span class="hljs-attribute">https</span>:<span class="hljs-comment">//vii5ard.github.io/whitespace/)</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image133.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image135.png" srcset="/img/loading.gif" lazyload></p>
+<p>没有内容输出，那就只能看到给的key文件了</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image137.png" srcset="/img/loading.gif" lazyload></p>
+<p>看数据可以发现文件头是png的  89 50 4E 47 </p>
+<p>使用一字节的逆序脚本就行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plain">hex_string = &quot;&quot;  #此处填需要逆序的十六进制<br>hex_list = hex_string.split()  # 将16进制字符串按空格分割成一个列表<br>result_list = []  # 存储转换后的结果<br><br>for num_hex in hex_list:<br>    num_int = int(num_hex, 16)  # 将16进制字符串转成10进制整数<br>    num_hex_reversed = hex(num_int)[2:].rjust(2, &#x27;0&#x27;)[::-1]  # 将10进制整数转换成16进制字符串，并反转字节<br>    result_list.append(num_hex_reversed)  # 将转换后的16进制字符串添加到结果列表中<br><br>result_str = &#x27; &#x27;.join(result_list) # 将结果列表按空格连接成一个字符串<br>print(result_str)  # 输出转换后的结果字符串<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../2024-JX-GCTF-xss-misc/image139.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到的十六进制另存为一个新文件，再使用文件逆序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">a = open(&#x27;mnimnimnim.png&#x27;,&#x27;rb&#x27;)<br>b = open(&#x27;mnimnimnimnim.png&#x27;,&#x27;wb&#x27;)<br>b = b.write(a.read()[::-1])<br></code></pre></td></tr></table></figure>
+
+<p>最后得到图片内容，</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image141.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">goodjob<br></code></pre></td></tr></table></figure>
+
+<p>得到的应该就是真的key ，除了white_space 隐写还有一种空白隐写，也就是SNOW隐写</p>
+<p>SNOW 用于通过在行尾附加空格和制表符来隐藏 ASCII 文本中的消息，即<strong>文本隐写</strong>。由于空格和制表符在文本查看器中通常不可见，因此消息实际上对不经意的观察者隐藏。并且如果使用内置加密，即使检测到消息也无法读取。</p>
+<p>结合我们得到的key去尝试解密</p>
+<p><img src="/../2024-JX-GCTF-xss-misc/image143.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">GCTF&#123;this_is_s@nw&#125;<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2024-GCTF(赣CTF)第二届江西省高校联合新生赛 Misc-wp</div>
+      <div>http://52yang.top/2024/11/03/2024-JX-GCTF-xss-misc/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Ch1p3</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年11月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/11/02/2024-nb-xls-qmxc/" title="2024年某公司内部训练赛">
+                        <span class="hidden-mobile">2024年某公司内部训练赛</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span>52ZY</span> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
