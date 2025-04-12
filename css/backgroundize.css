@@ -1,7 +1,7 @@
 :root {
-    --mobile-bg-image: url('https://github.com/52Zyang/Img/blob/main/dark.png');
-    --desktop-bg-image-normal: url('https://github.com/52Zyang/Img/blob/main/dark.png');
-    --desktop-bg-image-night: url('https://github.com/52Zyang/Img/blob/main/light.png');
+    --mobile-bg-image: url('https://img.picui.cn/free/2025/04/12/67f9cc1ae7643.png');
+    --desktop-bg-image-normal: url('https://img.picui.cn/free/2025/04/12/67f9cc1ae7643.png');
+    --desktop-bg-image-night: url('https://img.picui.cn/free/2025/04/12/67f9cc20473d8.png');
   }
   
   #web_bg {
@@ -12,6 +12,6 @@
     z-index: -1;
     background-size: cover;
     /* 添加过渡效果 */
-    transition: all 0.5s;
+    /*transition: all 0.5s;*/
   }
   
