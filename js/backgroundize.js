@@ -1,70 +1,19 @@
-/**
- * 返回当前的主题模式（dark或light）
- * @returns {string} 当前的主题模式
- */
-function getThemeMode() {
-    const theme = localStorage.getItem('Fluid_Color_Scheme');
-    console.log('当前主题模式为：', theme || 'dark');
-    return theme === 'light' ? 'light' : 'dark';
-  }
-  
-  /**
-   * 根据主题模式和设备类型设置背景图片
-   * @param {String} themeMode - 'light' 或 'dark'
-   */
-  function setBackgroundImage(themeMode) {
-    const isMobile = window.innerWidth < 768;
-    const webBgElement = document.querySelector('#web_bg');
-  
-    if (isMobile) {
-      webBgElement.style.backgroundImage = `var(--mobile-bg-image)`;
-    } else if (themeMode === 'dark') {
-      webBgElement.style.backgroundImage = `var(--desktop-bg-image-night)`;
-    } else {
-      webBgElement.style.backgroundImage = `var(--desktop-bg-image-normal)`;
-    }
-  }
-  
-  /**
-   * 初始化背景图片设置
-   * @returns {void}
-   */
-  function initBackground() {
-    const theme = getThemeMode();
-    setBackgroundImage(theme);
-  }
-  
-  /**
-   * 重置Banner样式，隐藏背景图片和遮罩层
-   * @returns {void}
-   */
-  function resetBannerStyles() {
-    document.querySelector("#banner").setAttribute('style', 'background-image: none');
-    document.querySelector("#banner .mask").setAttribute('style', 'background-color: rgba(0,0,0,0)');
-  }
-  
-  // 监听主题切换按钮点击事件
-  const themeBtn = document.querySelector('#color-toggle-btn');
-  if (themeBtn) {
-    themeBtn.addEventListener('click', () => {
-      const theme = getThemeMode();
-      setBackgroundImage(theme);
-      console.log(`切换到${theme === 'light' ? '日间' : '夜间'}模式`);
-    });
-  }
-  
-  // 初始化背景和样式
-  initBackground();
-  resetBannerStyles();
-  
-  // 监听窗口大小变化，做防抖处理调整背景
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      setBackgroundImage(getThemeMode());
-    }, 200);
-  }, {
-    passive: true // 防止默认事件
-  });
-  
+// 在手机端显示的背景图片链接
+const mobileBgImageUrl = "url('https://img.picui.cn/free/2025/04/12/67f9cc1ae7643.png')";
+
+// 在电脑端显示的背景图片链接
+const desktopBgImageUrl = "url('https://img.picui.cn/free/2025/04/12/67f9cc20473d8.png')";
+
+// 在手机端设置背景图片
+if (window.innerWidth < 768) {
+  document.querySelector('#web_bg').setAttribute('style', `background-image: ${mobileBgImageUrl};position: fixed;width: 100%;height: 100%;z-index: -1;background-size: cover;`);
+} else {
+  // 在电脑端设置背景图片
+  document.querySelector('#web_bg').setAttribute('style', `background-image: ${desktopBgImageUrl};position: fixed;width: 100%;height: 100%;z-index: -1;background-size: cover;`);
+}
+
+// 设置banner的背景图片为空
+document.querySelector("#banner").setAttribute('style', 'background-image: none');
+
+// 设置banner的.mask背景颜色透明
+document.querySelector("#banner .mask").setAttribute('style', 'background-color: rgba(0,0,0,0)');
