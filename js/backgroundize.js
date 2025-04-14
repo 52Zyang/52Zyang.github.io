@@ -1,5 +1,5 @@
 // 在手机端显示的背景图片链接
-const mobileBgImageUrl = "url('https://img.picui.cn/free/2025/04/12/67f9cc1ae7643.png')";
+const mobileBgImageUrl = "url('https://img.picui.cn/free/2025/04/14/67fc57d2a1900.png')";
 
 // 在电脑端显示的背景图片链接
 const desktopBgImageUrl = "url('https://img.picui.cn/free/2025/04/12/67f9cc20473d8.png')";
