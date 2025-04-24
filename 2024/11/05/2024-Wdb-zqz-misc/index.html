@@ -19,12 +19,12 @@
   <meta name="author" content="Ch1p3">
   <meta name="keywords" content="">
   
-    <meta name="description" content="这是测试test摘要">
+    <meta name="description" content="Misc01data文件  差分曼彻斯特算法 1234567891011121314151617181920from libnum import *# 读取文件内容with open(&quot;data&quot;, &quot;r&quot;, encoding&#x3D;&quot;utf-8&quot;) as f:    all_str &#x3D; f.read()# 计算输出字符串out &#x3D; []n &#x3D;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2024年&quot;网鼎杯&quot;朱雀组Misc-wp全解">
 <meta property="og:url" content="http://52yang.top/2024/11/05/2024-Wdb-zqz-misc/index.html">
 <meta property="og:site_name" content="Ch1p3">
-<meta property="og:description" content="这是测试test摘要">
+<meta property="og:description" content="Misc01data文件  差分曼彻斯特算法 1234567891011121314151617181920from libnum import *# 读取文件内容with open(&quot;data&quot;, &quot;r&quot;, encoding&#x3D;&quot;utf-8&quot;) as f:    all_str &#x3D; f.read()# 计算输出字符串out &#x3D; []n &#x3D;">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://52yang.top/2024-Wdb-zqz-misc/1730765567038-029209a8-6071-4bb0-a5ca-5f53db52b8d8.png">
 <meta property="og:image" content="http://52yang.top/2024-Wdb-zqz-misc/1730765793395-d39f3902-3277-4d63-a1a3-e57732820012.png">
@@ -50,7 +50,7 @@
 <meta property="og:image" content="http://52yang.top/2024-Wdb-zqz-misc/1730534228484-bef54a52-07a7-447a-990b-fa36a2f65bd2.png">
 <meta property="og:image" content="http://52yang.top/2024-Wdb-zqz-misc/1730534307813-07c45e44-2878-4dcb-8300-1783f0c2bc08.png">
 <meta property="article:published_time" content="2024-11-05T00:29:46.131Z">
-<meta property="article:modified_time" content="2025-04-07T01:18:31.776Z">
+<meta property="article:modified_time" content="2025-04-23T16:56:07.909Z">
 <meta property="article:author" content="Ch1p3">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://52yang.top/2024-Wdb-zqz-misc/1730765567038-029209a8-6071-4bb0-a5ca-5f53db52b8d8.png">
@@ -252,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          519 words
+          513 words
         
       </span>
     
@@ -305,9 +305,7 @@
             
               <div class="markdown-body">
                 
-                <p>这是测试test摘要</p>
-<span id="more"></span>
-<h3 id="Misc01"><a href="#Misc01" class="headerlink" title="Misc01"></a>Misc01</h3><p>data文件</p>
+                <h3 id="Misc01"><a href="#Misc01" class="headerlink" title="Misc01"></a>Misc01</h3><p>data文件</p>
 <p><img src="/../2024-Wdb-zqz-misc/1730765567038-029209a8-6071-4bb0-a5ca-5f53db52b8d8.png" srcset="/img/loading.gif" lazyload></p>
 <p>差分曼彻斯特算法</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs plain">from libnum import *<br><br># 读取文件内容<br>with open(&quot;data&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:<br>    all_str = f.read()<br><br># 计算输出字符串<br>out = []<br>n = (len(all_str) // 2) - 1<br><br># 使用列表推导式构建输出<br>for i in range(n):<br>    out.append(&#x27;0&#x27; if all_str[i*2:i*2+2] == all_str[i*2+2:i*2+4] else &#x27;1&#x27;)<br><br># 将列表转换为字符串并转换为十六进制<br>hex_output = hex(int(&#x27;&#x27;.join(out), 2))[2:]<br><br># 将结果写入文件<br>with open(&quot;tmp.txt&quot;, &quot;w&quot;) as f:<br>    f.write(hex_output)<br></code></pre></td></tr></table></figure>
@@ -393,6 +391,27 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CTF-Writeup/" class="category-chain-item">CTF Writeup</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
 </div>
 
@@ -447,9 +466,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/04/15/2025-PNG-ctf-misc/" title="">
+                      <a href="/2025/04/15/2025-PNG-ctf-misc/" title="CTF中PNG图片数据分析指北">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">CTF中PNG图片数据分析指北</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -561,7 +580,7 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-       <span>Hexo by Fluid</span> 
+       <span>Fluid by hexo</span> 
     </div>
   
   
